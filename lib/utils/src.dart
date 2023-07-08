@@ -21,6 +21,7 @@ class Src extends StatelessWidget {
           style: TextButton.styleFrom(
             backgroundColor: primaryColor.withOpacity(.1),
             foregroundColor: primaryColor,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
@@ -28,6 +29,7 @@ class Src extends StatelessWidget {
             foregroundColor: primaryColor,
             shape: const RoundedRectangleBorder(
                 side: BorderSide(color: primaryColor)),
+            padding: const EdgeInsets.all(20),
           ),
         ),
         filledButtonTheme: FilledButtonThemeData(
@@ -43,6 +45,7 @@ class Src extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: primaryColor,
             foregroundColor: Colors.white,
+            padding: const EdgeInsets.all(20),
           ),
         ),
         textTheme: GoogleFonts.robotoTextTheme(),

@@ -67,7 +67,7 @@ class RoomsGrid extends StatelessWidget {
                           children: [
                             Text(
                               ((rowWidth * index) + rowIndex).toString(),
-                              style: Theme.of(context).textTheme.headlineSmall,
+                              style: headlineSmall(context),
                             ),
                             bookedIndicator(context)
                           ],
@@ -95,7 +95,7 @@ class RoomsGrid extends StatelessWidget {
                     children: [
                       Text(
                         ((rowWidth * filledColumns) + rowIndex).toString(),
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: headlineSmall(context),
                       ),
                     ],
                   ),

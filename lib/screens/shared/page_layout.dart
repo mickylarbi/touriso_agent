@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:touriso_agent/utils/text_styles.dart';
 
 class PageLayout extends StatelessWidget {
   const PageLayout({
@@ -28,7 +29,7 @@ class PageLayout extends StatelessWidget {
                 if (showBackButton) const BackButton(),
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: headlineSmall(context),
                 ),
                 const Spacer(),
                 if (actions != null) ...actions!
@@ -43,15 +44,37 @@ class PageLayout extends StatelessWidget {
 }
 
 class Section extends StatelessWidget {
-  const Section({super.key, required this.child});
+  const Section({super.key, required this.child, this.titleText, this.actions});
   final Widget child;
+  final String? titleText;
+  final List<Widget>? actions;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey[50],
-      padding: const EdgeInsets.all(36),
-      child: child,
+      padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 24),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.grey[50],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              if (titleText != null)
+                Text(
+                  titleText!,
+                  style: titleLarge(context),
+                ),
+              const Spacer(),
+              if (actions != null) ...actions!
+            ],
+          ),
+          const SizedBox(height: 20),
+          child,
+        ],
+      ),
     );
   }
 }

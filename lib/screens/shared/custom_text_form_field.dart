@@ -133,7 +133,7 @@ class EditDetailsTextFormField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(labelText, style: labelSmall(context)),
+        Text(labelText, style: bodySmall(context)),
         CustomTextFormField(
           controller: controller,
           hintText: '',
@@ -162,7 +162,7 @@ class _GeolocationTextFieldsState extends State<GeoLocationTextFields> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Geolocation', style: labelSmall(context)),
+        Text('Geolocation', style: bodySmall(context)),
         Row(
           children: [
             Expanded(

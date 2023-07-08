@@ -4,6 +4,7 @@ import 'package:touriso_agent/screens/home/services/hotel/rooms_grid.dart';
 import 'package:touriso_agent/screens/shared/buttons.dart';
 import 'package:touriso_agent/screens/shared/custom_text_form_field.dart';
 import 'package:touriso_agent/screens/shared/page_layout.dart';
+import 'package:touriso_agent/utils/text_styles.dart';
 
 class EditHotelPage extends StatefulWidget {
   const EditHotelPage({super.key, this.hotel});
@@ -81,7 +82,7 @@ class _EditHotelPageState extends State<EditHotelPage> {
             const SizedBox(height: 40),
             Row(
               children: [
-                Text('Rooms', style: Theme.of(context).textTheme.titleMedium),
+                Text('Rooms', style: titleMedium(context)),
                 const Spacer(),
               ],
             ),

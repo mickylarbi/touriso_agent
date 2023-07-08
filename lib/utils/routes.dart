@@ -10,8 +10,10 @@ import 'package:touriso_agent/screens/home/history/history_page.dart';
 import 'package:touriso_agent/screens/home/home_page.dart';
 import 'package:touriso_agent/screens/home/order/order_page.dart';
 import 'package:touriso_agent/screens/home/services/hotel/edit_hotel_page.dart';
+import 'package:touriso_agent/screens/home/services/hotel/rooms_grid.dart';
 import 'package:touriso_agent/screens/home/services/services_page.dart';
 import 'package:touriso_agent/screens/home/services/tour/edit_site_page.dart';
+import 'package:touriso_agent/screens/home/services/tour/site_details_page.dart';
 
 GoRouter goRouter = GoRouter(
   routes: [
@@ -75,13 +77,26 @@ GoRouter goRouter = GoRouter(
                             location: 'GeoPoint(0, 0)',
                             geoLocation: GeoPoint(0, 0),
                             description: 'description',
-                            imageUrls: [],
+                            imageUrls: List.generate(5, (index) => 'null'),
                           )
                         : null,
                   ),
                 ),
+                GoRoute(
+                  path: 'site_details/:site_id',
+                  builder: (context, state) => SiteDetails(
+                    site: Site(
+                      id: state.pathParameters['site_id']!,
+                      name: 'Lou Moon',
+                      location: 'GeoPoint(0, 0)',
+                      geoLocation: const GeoPoint(0, 0),
+                      description: lipsum,
+                      imageUrls: const [],
+                    ),
+                  ),
+                ),
                 // GoRoute(path: '/add_apartment'),
-                // GoRoute(path: '/add_bus'),
+                // GoRoute(path: '/add_bus'),id
                 // GoRoute(path: '/add_flight'),
               ],
             ),
@@ -91,5 +106,5 @@ GoRouter goRouter = GoRouter(
       builder: (context, state, child) => HomePage(child: child),
     ),
   ],
-  initialLocation: '/services/edit_site/:0',
+  initialLocation: '/services/site_details/:0',
 );
