@@ -12,6 +12,8 @@ class CustomTextFormField extends StatelessWidget {
     this.maxLines,
     this.minLines,
     this.textAlign,
+    this.prefix,
+    this.suffix,
   });
 
   final TextEditingController controller;
@@ -21,6 +23,8 @@ class CustomTextFormField extends StatelessWidget {
   final int? maxLines;
   final int? minLines;
   final TextAlign? textAlign;
+  final Widget? prefix;
+  final Widget? suffix;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +59,8 @@ class CustomTextFormField extends StatelessWidget {
           borderSide: const BorderSide(color: Colors.grey),
         ),
         prefixIcon: prefixIcon,
+        prefix: prefix,
+        suffix: suffix,
       ),
       maxLines: maxLines,
       minLines: minLines,
@@ -117,16 +123,22 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
 }
 
 class EditDetailsTextFormField extends StatelessWidget {
-  const EditDetailsTextFormField(
-      {super.key,
-      required this.controller,
-      required this.labelText,
-      this.maxLines,
-      this.minLines});
+  const EditDetailsTextFormField({
+    super.key,
+    required this.controller,
+    required this.labelText,
+    this.maxLines,
+    this.minLines,
+    this.prefix,
+    this.suffix,
+  });
+
   final TextEditingController controller;
   final String labelText;
   final int? maxLines;
   final int? minLines;
+  final Widget? prefix;
+  final Widget? suffix;
 
   @override
   Widget build(BuildContext context) {
@@ -139,6 +151,8 @@ class EditDetailsTextFormField extends StatelessWidget {
           hintText: '',
           maxLines: maxLines,
           minLines: minLines,
+          prefix: prefix,
+          suffix: suffix,
         ),
       ],
     );
@@ -156,6 +170,30 @@ class GeoLocationTextFields extends StatefulWidget {
 class _GeolocationTextFieldsState extends State<GeoLocationTextFields> {
   TextEditingController latitudeController = TextEditingController();
   TextEditingController longitudeController = TextEditingController();
+
+  setLocation() {
+    if (double.tryParse(latitudeController.text) == null ||
+        double.tryParse(longitudeController.text) == null) {
+      widget.geoLocationNotifier.value = null;
+    } else {
+      widget.geoLocationNotifier.value = GeoPoint(
+        double.parse(latitudeController.text),
+        double.parse(longitudeController.text),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    latitudeController.addListener(() {
+      setLocation();
+    });
+    longitudeController.addListener(() {
+      setLocation();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

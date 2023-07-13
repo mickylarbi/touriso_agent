@@ -28,11 +28,11 @@ class AddServiceButton extends StatelessWidget {
         String path = '/services';
 
         if (value == 'Hotel') {
-          path += '/edit_hotel/:0';
+          path += '/add_hotel';
         }
 
         if (value == 'Tourist Site') {
-          path += '/edit_site/:0';
+          path += '/add_site';
         }
         // else if (value == 'Apartment') {
         //   path = '/add_apartment';

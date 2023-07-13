@@ -1,21 +1,24 @@
 import 'package:equatable/equatable.dart';
+import 'package:touriso_agent/models/cduration.dart';
 
 // ignore: must_be_immutable
 class Activity extends Equatable {
   String id;
+  String siteId;
   String name;
-  Duration duration;
+  CDuration duration;
   double price;
-  String location;
+  String? location;
   String description;
   List<String> imageUrls;
 
   Activity({
     required this.id,
+    required this.siteId,
     required this.name,
     required this.duration,
     required this.price,
-    required this.location,
+    this.location,
     required this.description,
     required this.imageUrls,
   });

@@ -3,15 +3,17 @@ import 'package:touriso_agent/utils/colors.dart';
 
 // ignore: must_be_immutable
 class LoadingButton extends StatelessWidget {
-  LoadingButton(
-      {super.key,
-      required this.onPressed,
-      required this.child,
-      this.backgroundColor,
-      this.foregroundColor,
-      this.minimumSize,
-      this.shape});
-  final Function onPressed;
+  LoadingButton({
+    super.key,
+    required this.onPressed,
+    required this.child,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.minimumSize,
+    this.shape,
+  });
+
+  final Function? onPressed;
   final Widget child;
   final Color? backgroundColor;
   final Color? foregroundColor;
@@ -23,24 +25,18 @@ class LoadingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StatefulBuilder(
-      builder: (context, setState) => ElevatedButton(
-        onPressed: () async {
-          isLoading = true;
-          setState(() {});
+      builder: (context, setState) => FilledButton(
+        onPressed: onPressed == null
+            ? null
+            : () async {
+                isLoading = true;
+                setState(() {});
 
-          await onPressed();
+                await onPressed!();
 
-          isLoading = false;
-          setState(() {});
-        },
-        style: ElevatedButton.styleFrom(
-          minimumSize: minimumSize ?? const Size.fromHeight(48),
-          // backgroundColor: backgroundColor ?? Theme.of(context).primaryColor,
-          // foregroundColor: foregroundColor,
-          // padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          shape: shape ??
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        ),
+                isLoading = false;
+                setState(() {});
+              },
         child: isLoading
             ? const SizedBox(
                 height: 16,
@@ -100,6 +96,40 @@ class IconTextButton extends StatelessWidget {
         iconColor: color,
       ),
       child: const Icon(Icons.delete),
+    );
+  }
+}
+
+class StatefulLoadingButton extends StatelessWidget {
+  const StatefulLoadingButton({
+    super.key,
+    required this.buttonEnabledNotifier,
+    required this.onPressed,
+    required this.child,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.minimumSize,
+    this.shape,
+  });
+
+  final ValueNotifier<bool> buttonEnabledNotifier;
+  final Function? onPressed;
+  final Widget child;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
+  final Size? minimumSize;
+  final OutlinedBorder? shape;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<bool>(
+      valueListenable: buttonEnabledNotifier,
+      builder: (context, value, _) {
+        return LoadingButton(
+          onPressed: value ? () {} : null,
+          child: child,
+        );
+      },
     );
   }
 }

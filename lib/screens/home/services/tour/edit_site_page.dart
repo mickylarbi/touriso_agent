@@ -18,7 +18,37 @@ class _EditSiteState extends State<EditSite> {
   TextEditingController locationController = TextEditingController();
   ValueNotifier<GeoPoint?> geoLocationNotifier = ValueNotifier<GeoPoint?>(null);
   TextEditingController descriptionController = TextEditingController();
-  ValueNotifier<List<String>> imageUrlsNotifier = ValueNotifier([]);
+  ValueNotifier<bool> buttonEnabledNotifier = ValueNotifier(false);
+
+  setButtonState() {
+    if (nameController.text.isEmpty ||
+        locationController.text.isEmpty ||
+        geoLocationNotifier.value == null ||
+        descriptionController.text.isEmpty) {
+      buttonEnabledNotifier.value = false;
+    } else {
+      buttonEnabledNotifier.value = true;
+    }
+    print(buttonEnabledNotifier.value);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    nameController.addListener(() {
+      setButtonState();
+    });
+    locationController.addListener(() {
+      setButtonState();
+    });
+    geoLocationNotifier.addListener(() {
+      setButtonState();
+    });
+    descriptionController.addListener(() {
+      setButtonState();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +87,13 @@ class _EditSiteState extends State<EditSite> {
             Row(
               children: [
                 const Spacer(),
-                FilledButton(
-                  onPressed: null,
+                StatefulLoadingButton(
+                  buttonEnabledNotifier: buttonEnabledNotifier,
+                  onPressed: () {},
                   child: Text('${widget.site == null ? 'Add' : 'Update'} site'),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -75,7 +106,7 @@ class _EditSiteState extends State<EditSite> {
     locationController.dispose();
     geoLocationNotifier.dispose();
     descriptionController.dispose();
-    imageUrlsNotifier.dispose();
+
     super.dispose();
   }
 }

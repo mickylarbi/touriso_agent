@@ -8,10 +8,37 @@ class ServicesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageLayout(
+      sectioned: true,
       title: 'Services',
       actions: const [AddServiceButton()],
       body: ListView(
-        children: [],
+        padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 40),
+        children: [
+          Section(
+            titleText: 'Sites',
+            child: Container(),
+          ),
+          const SizedBox(height: 40),
+          Section(
+            titleText: 'Hotels',
+            child: Container(),
+          ),
+          const SizedBox(height: 40),
+          Section(
+            titleText: 'Apartments',
+            child: Container(),
+          ),
+          const SizedBox(height: 40),
+          Section(
+            titleText: 'Flight',
+            child: Container(),
+          ),
+          const SizedBox(height: 40),
+          Section(
+            titleText: 'Bus',
+            child: Container(),
+          ),
+        ],
       ),
     );
   }
