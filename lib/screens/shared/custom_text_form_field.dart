@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:touriso_agent/utils/colors.dart';
 import 'package:touriso_agent/utils/text_styles.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -59,6 +60,7 @@ class CustomTextFormField extends StatelessWidget {
           borderSide: const BorderSide(color: Colors.grey),
         ),
         prefixIcon: prefixIcon,
+        prefixIconColor: Colors.grey,
         prefix: prefix,
         suffix: suffix,
       ),
@@ -93,23 +95,42 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
         return TextFormField(
           controller: widget.controller,
           obscureText: value,
+          style: bodyMedium(context),
           decoration: InputDecoration(
-            hintText: widget.hintText,
-            hintStyle: const TextStyle(color: Colors.grey),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: const BorderSide(color: Colors.grey),
-            ),
-            prefixIcon: const Icon(Icons.lock_outline_rounded),
-            suffixIcon: IconButton(
-              icon: Icon(value ? Icons.visibility_off : Icons.visibility),
-              onPressed: () {
-                obscureText.value = !obscureText.value;
-              },
-            ),
-          ),
+              hintText: widget.hintText,
+              hintStyle: const TextStyle(color: Colors.grey),
+              isDense: true,
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.grey[200]!),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.grey[100]!),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.grey[300]!),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: Colors.red),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              prefixIcon: const Icon(Icons.lock_outline_rounded),
+              prefixIconColor: Colors.grey,
+              suffixIcon: IconButton(
+                icon: Icon(value ? Icons.visibility_off : Icons.visibility),
+                onPressed: () {
+                  obscureText.value = !obscureText.value;
+                },
+              ),
+              suffixIconColor: primaryColor),
         );
       },
     );
@@ -131,6 +152,8 @@ class EditDetailsTextFormField extends StatelessWidget {
     this.minLines,
     this.prefix,
     this.suffix,
+    this.keyboardType,
+    this.prefixIcon,
   });
 
   final TextEditingController controller;
@@ -139,6 +162,8 @@ class EditDetailsTextFormField extends StatelessWidget {
   final int? minLines;
   final Widget? prefix;
   final Widget? suffix;
+  final TextInputType? keyboardType;
+  final Widget? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -149,8 +174,10 @@ class EditDetailsTextFormField extends StatelessWidget {
         CustomTextFormField(
           controller: controller,
           hintText: '',
+          keyboardType: keyboardType,
           maxLines: maxLines,
           minLines: minLines,
+          prefixIcon: prefixIcon,
           prefix: prefix,
           suffix: suffix,
         ),

@@ -29,7 +29,6 @@ class _EditSiteState extends State<EditSite> {
     } else {
       buttonEnabledNotifier.value = true;
     }
-    print(buttonEnabledNotifier.value);
   }
 
   @override

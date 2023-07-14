@@ -3,8 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:touriso_agent/screens/shared/buttons.dart';
 import 'package:touriso_agent/screens/shared/custom_text_form_field.dart';
 import 'package:touriso_agent/screens/shared/custom_text_span.dart';
-import 'package:touriso_agent/utils/constants.dart';
-import 'package:touriso_agent/utils/dimensions.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm({super.key, this.authType = AuthType.login});
@@ -29,14 +27,7 @@ class _AuthFormState extends State<AuthForm> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Hero(
-            tag: kLogoTag,
-            child: Image.asset(
-              'assets/images/TOURISO 2.png',
-              width: (kScreenWidth(context)) * 0.8,
-            ),
-          ),
-          const SizedBox(height: 40),
+          
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -55,9 +46,9 @@ class _AuthFormState extends State<AuthForm> {
               prefixIcon: const Icon(Icons.person_outline_rounded),
             ),
           const SizedBox(height: 20),
-          CustomTextFormField(
+          EditDetailsTextFormField(
             controller: _emailController,
-            hintText: 'Email',
+            labelText: 'Email',
             keyboardType: TextInputType.emailAddress,
             prefixIcon: const Icon(Icons.email_outlined),
           ),

@@ -3,8 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:touriso_agent/models/cduration.dart';
 import 'package:touriso_agent/models/tour/activity.dart';
 import 'package:touriso_agent/models/tour/site.dart';
-import 'package:touriso_agent/screens/auth/auth_form.dart';
-import 'package:touriso_agent/screens/auth/auth_screen.dart';
+import 'package:touriso_agent/screens/auth/auth_shell.dart';
+import 'package:touriso_agent/screens/auth/login_page.dart';
+import 'package:touriso_agent/screens/auth/register_page.dart';
 import 'package:touriso_agent/screens/home/dashboard/dashboard_page.dart';
 import 'package:touriso_agent/screens/home/history/history_page.dart';
 import 'package:touriso_agent/screens/home/home_page.dart';
@@ -22,15 +23,14 @@ GoRouter goRouter = GoRouter(
       routes: [
         GoRoute(
           path: '/login',
-          builder: (context, state) => const AuthForm(authType: AuthType.login),
+          builder: (context, state) => const LoginPage(),
         ),
         GoRoute(
-          path: '/signup',
-          builder: (context, state) =>
-              const AuthForm(authType: AuthType.signUp),
+          path: '/register',
+          builder: (context, state) => const RegisterPage(),
         ),
       ],
-      builder: (context, state, child) => AuthScreen(child: child),
+      builder: (context, state, child) => AuthShell(child: child),
     ),
     StatefulShellRoute.indexedStack(
       branches: [
@@ -97,5 +97,5 @@ GoRouter goRouter = GoRouter(
       builder: (context, state, child) => HomePage(child: child),
     ),
   ],
-  initialLocation: '/services',
+  initialLocation: '/login',
 );
