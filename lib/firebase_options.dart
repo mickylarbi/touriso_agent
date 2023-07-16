@@ -21,9 +21,15 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
@@ -45,34 +51,16 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyBLWZ0waPuUdDK5tN6UQ19659IO5RDoRGw',
-    appId: '1:437881507377:web:c6a9433e937a9a77574f10',
+    appId: '1:437881507377:web:d568fc4e2921dc02574f10',
     messagingSenderId: '437881507377',
     projectId: 'touriso-ea0',
     authDomain: 'touriso-ea0.firebaseapp.com',
     storageBucket: 'touriso-ea0.appspot.com',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDrrSkkxjA2EbV2dzXpxUp8aoIy9e6oaDY',
-    appId: '1:437881507377:android:8546fe965728b391574f10',
-    messagingSenderId: '437881507377',
-    projectId: 'touriso-ea0',
-    storageBucket: 'touriso-ea0.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCZMMwvbAFaUYzz95AInWEnWdR66t5LeV8',
-    appId: '1:437881507377:ios:3a3cf1169117c2ab574f10',
-    messagingSenderId: '437881507377',
-    projectId: 'touriso-ea0',
-    storageBucket: 'touriso-ea0.appspot.com',
-    iosClientId: '437881507377-ut49vga7ugvj3rkjqt2b606gl5ttrkt9.apps.googleusercontent.com',
-    iosBundleId: 'com.example.tourisoAgent',
-  );
-
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCZMMwvbAFaUYzz95AInWEnWdR66t5LeV8',
-    appId: '1:437881507377:ios:c6fad3a5162f164c574f10',
+    appId: '1:437881507377:ios:84e19cd67c6348c9574f10',
     messagingSenderId: '437881507377',
     projectId: 'touriso-ea0',
     storageBucket: 'touriso-ea0.appspot.com',

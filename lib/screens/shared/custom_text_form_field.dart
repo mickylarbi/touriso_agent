@@ -125,7 +125,9 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
               prefixIcon: const Icon(Icons.lock_outline_rounded),
               prefixIconColor: Colors.grey,
               suffixIcon: IconButton(
-                icon: Icon(value ? Icons.visibility_off : Icons.visibility),
+                icon: Icon(value
+                    ? Icons.visibility_rounded
+                    : Icons.visibility_off_rounded),
                 onPressed: () {
                   obscureText.value = !obscureText.value;
                 },

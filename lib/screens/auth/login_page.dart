@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:touriso_agent/screens/shared/buttons.dart';
 import 'package:touriso_agent/screens/shared/custom_text_form_field.dart';
 import 'package:touriso_agent/screens/shared/custom_text_span.dart';
 import 'package:touriso_agent/utils/constants.dart';
+import 'package:touriso_agent/utils/dialogs.dart';
 import 'package:touriso_agent/utils/dimensions.dart';
 
 class LoginPage extends StatefulWidget {
@@ -78,7 +80,20 @@ class _LoginPageState extends State<LoginPage> {
         const SizedBox(height: 40),
         StatefulLoadingButton(
           buttonEnabledNotifier: buttonEnabledNotifier,
-          onPressed: () {},
+          onPressed: () async {
+            try {
+              await FirebaseAuth.instance.signInWithEmailAndPassword(
+                email: _emailController.text,
+                password: _passwordController.text,
+              );
+
+              // ignore: use_build_context_synchronously
+              context.go('/dashboard');
+            } catch (e) {
+              print(e);
+              showAlertDialog(context);
+            }
+          },
           child: const Text('LOGIN'),
         ),
         const SizedBox(height: 30),
@@ -90,6 +105,13 @@ class _LoginPageState extends State<LoginPage> {
           },
         )
       ],
+    );
+  }
+
+  login() async {
+    FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailController.text,
+      password: _passwordController.text,
     );
   }
 

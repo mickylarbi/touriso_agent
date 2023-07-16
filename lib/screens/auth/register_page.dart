@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:touriso_agent/models/company.dart';
 import 'package:touriso_agent/screens/shared/buttons.dart';
 import 'package:touriso_agent/screens/shared/custom_text_form_field.dart';
 import 'package:touriso_agent/screens/shared/custom_text_span.dart';
@@ -140,7 +144,15 @@ class _RegisterPageState extends State<RegisterPage> {
         const SizedBox(height: 40),
         StatefulLoadingButton(
           buttonEnabledNotifier: buttonEnabledNotifier,
-          onPressed: () {},
+          onPressed: () async {
+            try {
+              await register();
+              context.go('/dashboard');
+            } catch (e) {
+              print(e);
+              showAlertDialog(context);
+            }
+          },
           child: const Text('REGISTER'),
         ),
         const SizedBox(height: 30),
@@ -153,5 +165,27 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ],
     );
+  }
+
+  Future register() async {
+    UserCredential credential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+            email: companyEmailController.text,
+            password: _passwordController.text);
+
+    await FirebaseStorage.instance
+        .ref('logos/${credential.user!.uid}')
+        .putData(await companyLogoNotifier.value!.readAsBytes());
+
+    FirebaseFirestore.instance.collection('companies').add(
+          Company(
+            'id',
+            companyNameController.text,
+            companyMottoController.text,
+            await FirebaseStorage.instance
+                .ref('logos/${credential.user!.uid}')
+                .getDownloadURL(),
+          ).toFirebase(),
+        );
   }
 }

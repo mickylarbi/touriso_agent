@@ -9,6 +9,18 @@ class Company extends Equatable {
 
   Company(this.id, this.name, this.motto, this.logoUrl);
 
+  Company.fromFirebase(Map<String, dynamic> map, String companyId)
+      : id = companyId,
+        name = map['name'],
+        motto = map['motto'],
+        logoUrl = map['logoUrl'];
+
+  Map<String, dynamic> toFirebase() => {
+        'name': name,
+        'motto': motto,
+        'logoUrl': logoUrl,
+      };
+
   @override
   List<Object?> get props => [id, name, motto, logoUrl];
 }

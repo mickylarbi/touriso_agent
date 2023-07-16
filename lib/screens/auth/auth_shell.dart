@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:touriso_agent/utils/constants.dart';
 import 'package:touriso_agent/utils/dimensions.dart';
 
 class AuthShell extends StatelessWidget {
@@ -30,7 +29,7 @@ class AuthShell extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(child: Center(child: child)),
+              Expanded(child: Center(child: child)),//TODO: move expanded and center into children
             ],
           ),
         ],

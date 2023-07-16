@@ -29,19 +29,22 @@ class LoadingButton extends StatelessWidget {
         onPressed: onPressed == null
             ? null
             : () async {
-                isLoading = true;
-                setState(() {});
+                setState(() {
+                  isLoading = true;
+                });
 
                 await onPressed!();
 
                 isLoading = false;
-                setState(() {});
+                setState(() {
+                  isLoading = false;
+                });
               },
         child: isLoading
             ? const SizedBox(
                 height: 16,
                 width: 16,
-                child: CircularProgressIndicator.adaptive(
+                child: CircularProgressIndicator(
                   strokeWidth: 2,
                   valueColor: AlwaysStoppedAnimation(Colors.white),
                 ),
@@ -126,7 +129,7 @@ class StatefulLoadingButton extends StatelessWidget {
       valueListenable: buttonEnabledNotifier,
       builder: (context, value, _) {
         return LoadingButton(
-          onPressed: value ? () {} : null,
+          onPressed: value ? onPressed : null,
           child: child,
         );
       },
