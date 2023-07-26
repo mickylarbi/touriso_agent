@@ -51,9 +51,9 @@ void showConfirmationDialog(BuildContext context,
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: Row(
+      title: const Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: const [
+        children: [
           Icon(Icons.info_outline, color: Colors.amber),
         ],
       ),
@@ -63,44 +63,19 @@ void showConfirmationDialog(BuildContext context,
           onPressed: () {
             Navigator.pop(context);
           },
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.grey[200]),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            ),
-          ),
-          child: const Text(
-            'NO',
-            style: TextStyle(
-                // color: Colors.white,
-                fontWeight: FontWeight.bold,
-                letterSpacing: .5),
-          ),
+          child: const Text('NO'),
         ),
-        TextButton(
+        FilledButton(
           onPressed: () {
             Navigator.pop(context);
             confirmFunction();
           },
-          style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all(Theme.of(context).primaryColor),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            ),
-          ),
-          child: const Text(
-            'YES',
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                letterSpacing: .5),
-          ),
+          child: const Text('YES'),
         ),
       ],
       actionsAlignment: MainAxisAlignment.center,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      actionsPadding: const EdgeInsets.symmetric(horizontal: 14),
+      actionsPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
     ),
   );
 }
@@ -120,6 +95,24 @@ void showCustomBottomSheet(BuildContext context, List<Widget> children) {
           child: Column(mainAxisSize: MainAxisSize.min, children: children),
         ),
       ),
+    ),
+  );
+}
+
+Future<T?> showFormDialog<T>(
+  BuildContext context,
+  Widget form,
+) {
+  return showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      content: SizedBox(
+          width: 400,
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: form,
+          )),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
     ),
   );
 }

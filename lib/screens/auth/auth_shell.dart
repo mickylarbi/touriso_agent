@@ -18,18 +18,24 @@ class AuthShell extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: ClipRRect(
+                child: Container(
+                  margin: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    child: Image.asset(
-                      'assets/images/homeimg-30 1.png',
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(.1),
+                        blurRadius: 40,
+                      ),
+                    ],
+                    image: const DecorationImage(
+                      image: AssetImage('assets/images/homeimg-30 1.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
-              Expanded(child: Center(child: child)),//TODO: move expanded and center into children
+              Expanded(child: child),
             ],
           ),
         ],

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +10,7 @@ import 'package:touriso_agent/screens/shared/custom_text_span.dart';
 import 'package:touriso_agent/utils/constants.dart';
 import 'package:touriso_agent/utils/dialogs.dart';
 import 'package:touriso_agent/utils/dimensions.dart';
+import 'package:touriso_agent/utils/firebase_helper.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -65,127 +65,129 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      padding: const EdgeInsets.symmetric(horizontal: 200),
-      children: [
-        Hero(
-          tag: kLogoTag,
-          child: Image.asset(
-            'assets/images/TOURISO 2.png',
-            width: (kScreenWidth(context) / 2) * 0.8,
+    //TODO: focus node things
+    return Center(
+      child: ListView(
+        shrinkWrap: true,
+        padding: const EdgeInsets.symmetric(horizontal: 200),
+        children: [
+          Hero(
+            tag: kLogoTag,
+            child: Image.asset(
+              'assets/images/TOURISO 2.png',
+              width: (kScreenWidth(context) / 2) * 0.8,
+            ),
           ),
-        ),
-        const SizedBox(height: 40),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            'Register',
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .copyWith(fontWeight: FontWeight.bold),
+          const SizedBox(height: 40),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Register',
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall!
+                  .copyWith(fontWeight: FontWeight.bold),
+            ),
           ),
-        ),
-        const SizedBox(height: 20),
-        CustomTextFormField(
-          controller: companyNameController,
-          hintText: 'Company name',
-          prefixIcon: const Icon(Icons.person_outline_rounded),
-        ),
-        const SizedBox(height: 20),
-        CustomTextFormField(
-          controller: companyMottoController,
-          hintText: 'Company motto',
-          prefixIcon: const Icon(Icons.short_text_rounded),
-        ),
-        const SizedBox(height: 20),
-        CustomTextFormField(
-          controller: companyEmailController,
-          hintText: 'Company email',
-          prefixIcon: const Icon(Icons.email_outlined),
-        ),
-        const SizedBox(height: 20),
+          const SizedBox(height: 20),
+          CustomTextFormField(
+            controller: companyNameController,
+            hintText: 'Company name',
+            prefixIcon: const Icon(Icons.person_outline_rounded),
+          ),
+          const SizedBox(height: 20),
+          CustomTextFormField(
+            controller: companyMottoController,
+            hintText: 'Company motto',
+            prefixIcon: const Icon(Icons.short_text_rounded),
+          ),
+          const SizedBox(height: 20),
+          CustomTextFormField(
+            controller: companyEmailController,
+            hintText: 'Company email',
+            prefixIcon: const Icon(Icons.email_outlined),
+          ),
+          const SizedBox(height: 20),
 
-        //TODO: IMAGE PICKER THINGS
-        ValueListenableBuilder<XFile?>(
-          valueListenable: companyLogoNotifier,
-          builder: (BuildContext context, XFile? value, Widget? child) {
-            return Column(
-              children: [
-                if (value != null)
-                  Image.network(
-                    value.path,
-                    width: 300,
-                  ),
-                const SizedBox(height: 20),
-                TextButton(
-                  onPressed: () async {
-                    final ImagePicker picker = ImagePicker();
+          //TODO: IMAGE PICKER THINGS
+          ValueListenableBuilder<XFile?>(
+            valueListenable: companyLogoNotifier,
+            builder: (BuildContext context, XFile? value, Widget? child) {
+              return Column(
+                children: [
+                  if (value != null)
+                    Image.network(
+                      value.path,
+                      width: 300,
+                    ),
+                  const SizedBox(height: 20),
+                  TextButton(
+                    onPressed: () async {
+                      final ImagePicker picker = ImagePicker();
 
-                    picker.pickImage(source: ImageSource.gallery).then((value) {
-                      companyLogoNotifier.value = value;
-                    }).onError((error, stackTrace) {
-                      showAlertDialog(context);
-                    });
-                  },
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.black54,
-                    foregroundColor: Colors.white,
+                      picker
+                          .pickImage(source: ImageSource.gallery)
+                          .then((value) {
+                        companyLogoNotifier.value = value;
+                      }).onError((error, stackTrace) {
+                        showAlertDialog(context);
+                      });
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.black54,
+                      foregroundColor: Colors.white,
+                    ),
+                    child: Text('${value == null ? 'Choose' : 'Change'} image'),
                   ),
-                  child: Text('${value == null ? 'Choose' : 'Change'} image'),
-                ),
-              ],
-            );
-          },
-        ),
-        const SizedBox(height: 20),
-        PasswordTextFormField(controller: _passwordController),
-        const SizedBox(height: 40),
-        StatefulLoadingButton(
-          buttonEnabledNotifier: buttonEnabledNotifier,
-          onPressed: () async {
-            try {
-              await register();
-              context.go('/dashboard');
-            } catch (e) {
-              print(e);
-              showAlertDialog(context);
-            }
-          },
-          child: const Text('REGISTER'),
-        ),
-        const SizedBox(height: 30),
-        CustomTextSpan(
-          firstText: 'Already registered?',
-          secondText: 'Login here',
-          onPressed: () {
-            context.go('/login');
-          },
-        ),
-      ],
+                ],
+              );
+            },
+          ),
+          const SizedBox(height: 20),
+          PasswordTextFormField(controller: _passwordController),
+          const SizedBox(height: 40),
+          StatefulLoadingButton(
+            buttonEnabledNotifier: buttonEnabledNotifier,
+            onPressed: () async {
+              try {
+                await register();
+                context.go('/dashboard');
+              } catch (e) {
+                print(e);
+                showAlertDialog(context);
+              }
+            },
+            child: const Text('REGISTER'),
+          ),
+          const SizedBox(height: 30),
+          CustomTextSpan(
+            firstText: 'Already registered?',
+            secondText: 'Login here',
+            onPressed: () {
+              context.go('/login');
+            },
+          ),
+        ],
+      ),
     );
   }
 
   Future register() async {
-    UserCredential credential = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-            email: companyEmailController.text,
-            password: _passwordController.text);
+    UserCredential credential = await auth.createUserWithEmailAndPassword(
+        email: companyEmailController.text, password: _passwordController.text);
 
-    await FirebaseStorage.instance
-        .ref('logos/${credential.user!.uid}')
+    await logosRef(credential.user!.uid)
         .putData(await companyLogoNotifier.value!.readAsBytes());
 
-    FirebaseFirestore.instance.collection('companies').add(
-          Company(
-            'id',
-            companyNameController.text,
-            companyMottoController.text,
-            await FirebaseStorage.instance
-                .ref('logos/${credential.user!.uid}')
-                .getDownloadURL(),
-          ).toFirebase(),
-        );
+    await companiesCollection.add(
+      Company(
+        'id',
+        companyNameController.text,
+        companyMottoController.text,
+        await FirebaseStorage.instance
+            .ref('logos/${credential.user!.uid}')
+            .getDownloadURL(),
+      ).toFirebase(),
+    );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:touriso_agent/utils/constants.dart';
+import 'package:touriso_agent/utils/colors.dart';
 import 'package:touriso_agent/utils/variables.dart';
 
 // ignore: must_be_immutable
@@ -17,15 +17,12 @@ class SideBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       width: 200,
-      color: Colors.grey[100],
+      decoration: BoxDecoration(
+        border: Border(right: BorderSide(color: borderColor)),
+        color: Colors.grey[50],
+      ),
       child: Column(
         children: [
-          Hero(
-            tag: kLogoTag,
-            child: Image.asset(
-              'assets/images/TOURISO 2.png',
-            ),
-          ),
           const SizedBox(height: 40),
           StatefulBuilder(builder: (context, setState) {
             return ListView.builder(
@@ -56,13 +53,11 @@ class SideBar extends StatelessWidget {
                         //     selectedPage == index ? Colors.white : Colors.black,
                       ),
                       const SizedBox(width: 5),
-                      Text(
-                        pages[index],
-                        // style: TextStyle(
-                        //   color: selectedPage == index
-                        //       ? Colors.white
-                        //       : Colors.black,
-                        // ),
+                      Expanded(
+                        child: Text(
+                          pages[index],
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ),
@@ -71,7 +66,8 @@ class SideBar extends StatelessWidget {
             );
           }),
           const Spacer(),
-          PopupMenuButton(//TODO: move profile to top right
+          PopupMenuButton(
+            //TODO: move profile to top right
             key: _menuKey,
             itemBuilder: (context) => <PopupMenuEntry>[
               const PopupMenuItem(

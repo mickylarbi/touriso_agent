@@ -17,4 +17,6 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const Src());
+
+  //TODO: show alert dialog for error events
 }

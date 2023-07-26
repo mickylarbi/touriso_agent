@@ -37,8 +37,7 @@ class CustomTextFormField extends StatelessWidget {
         hintText: hintText,
         hintStyle: const TextStyle(color: Colors.grey),
         isDense: true,
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+        contentPadding: const EdgeInsets.all(12),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.grey[200]!),
@@ -201,13 +200,13 @@ class _GeolocationTextFieldsState extends State<GeoLocationTextFields> {
   TextEditingController longitudeController = TextEditingController();
 
   setLocation() {
-    if (double.tryParse(latitudeController.text) == null ||
-        double.tryParse(longitudeController.text) == null) {
+    if (double.tryParse(latitudeController.text.trim()) == null ||
+        double.tryParse(longitudeController.text.trim()) == null) {
       widget.geoLocationNotifier.value = null;
     } else {
       widget.geoLocationNotifier.value = GeoPoint(
-        double.parse(latitudeController.text),
-        double.parse(longitudeController.text),
+        double.parse(latitudeController.text.trim()),
+        double.parse(longitudeController.text.trim()),
       );
     }
   }
@@ -215,6 +214,13 @@ class _GeolocationTextFieldsState extends State<GeoLocationTextFields> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.geoLocationNotifier.value != null) {
+      latitudeController.text =
+          widget.geoLocationNotifier.value!.latitude.toString();
+      longitudeController.text =
+          widget.geoLocationNotifier.value!.longitude.toString();
+    }
 
     latitudeController.addListener(() {
       setLocation();
@@ -229,7 +235,7 @@ class _GeolocationTextFieldsState extends State<GeoLocationTextFields> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Geolocation', style: bodySmall(context)),
+        Text('Geo location', style: bodySmall(context)),
         Row(
           children: [
             Expanded(

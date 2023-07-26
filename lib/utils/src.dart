@@ -48,9 +48,11 @@ class Src extends StatelessWidget {
             padding: const EdgeInsets.all(20),
           ),
         ),
-        textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.black),
+        textSelectionTheme:
+            const TextSelectionThemeData(cursorColor: Colors.black),
         textTheme: GoogleFonts.robotoTextTheme(),
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
