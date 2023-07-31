@@ -15,6 +15,7 @@ class CustomTextFormField extends StatelessWidget {
     this.textAlign,
     this.prefix,
     this.suffix,
+    this.initialValue,
   });
 
   final TextEditingController controller;
@@ -26,6 +27,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextAlign? textAlign;
   final Widget? prefix;
   final Widget? suffix;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +68,7 @@ class CustomTextFormField extends StatelessWidget {
       maxLines: maxLines,
       minLines: minLines,
       textAlign: textAlign ?? TextAlign.start,
+      initialValue: initialValue,
     );
   }
 }
@@ -244,6 +247,7 @@ class _GeolocationTextFieldsState extends State<GeoLocationTextFields> {
                 hintText: 'Latitude',
                 textAlign: TextAlign.right,
                 keyboardType: TextInputType.number,
+                suffix: const Text('°'),
               ),
             ),
             const SizedBox(width: 10),
@@ -253,6 +257,7 @@ class _GeolocationTextFieldsState extends State<GeoLocationTextFields> {
                 hintText: 'Longitude',
                 textAlign: TextAlign.right,
                 keyboardType: TextInputType.number,
+                suffix: const Text('°'),
               ),
             ),
           ],

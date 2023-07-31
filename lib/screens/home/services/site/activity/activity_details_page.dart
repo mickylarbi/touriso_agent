@@ -12,6 +12,7 @@ import 'package:touriso_agent/screens/shared/page_layout.dart';
 import 'package:touriso_agent/utils/constants.dart';
 import 'package:touriso_agent/utils/dialogs.dart';
 import 'package:touriso_agent/utils/firebase_helper.dart';
+import 'package:touriso_agent/utils/text_styles.dart';
 
 class ActivityDetailsPage extends StatelessWidget {
   const ActivityDetailsPage({super.key, required this.activityId});
@@ -109,6 +110,7 @@ class ActivityDetailsPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Text(
                         activity.description,
                         textAlign: TextAlign.justify,
@@ -120,11 +122,24 @@ class ActivityDetailsPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text(
+                            'Duration:',
+                            style: bodySmall(context),
+                          ),
                           Text(activity.duration.toString()),
                           const SizedBox(height: 20),
+                          Text(
+                            'Price:',
+                            style: bodySmall(context),
+                          ),
                           Text('$ghanaCedi ${activity.price.toString()}'),
                           if (activity.location != null)
                             const SizedBox(height: 20),
+                          if (activity.location != null)
+                            Text(
+                              'Location:',
+                              style: bodySmall(context),
+                            ),
                           if (activity.location != null)
                             Text(activity.location!),
                         ],

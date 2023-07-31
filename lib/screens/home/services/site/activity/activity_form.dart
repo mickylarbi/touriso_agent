@@ -8,6 +8,7 @@ import 'package:touriso_agent/screens/shared/custom_text_form_field.dart';
 import 'package:touriso_agent/utils/constants.dart';
 import 'package:touriso_agent/utils/dialogs.dart';
 import 'package:touriso_agent/utils/firebase_helper.dart';
+import 'package:touriso_agent/utils/text_styles.dart';
 
 class ActivityForm extends StatefulWidget {
   const ActivityForm({super.key, this.activity, required this.siteId});
@@ -84,6 +85,7 @@ class _ActivityFormState extends State<ActivityForm> {
             controller: durationController,
             labelText: 'Duration:',
           ),
+          const SizedBox(height: 8),
           DropdownButtonFormField(
             onChanged: (value) {
               durationUnit = value;
@@ -95,6 +97,34 @@ class _ActivityFormState extends State<ActivityForm> {
                       child: Text(e),
                     ))
                 .toList(),
+            style: bodyMedium(context),
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.all(12),
+              isDense: true,
+              filled: true,
+              fillColor: Colors.grey[200],
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.grey[100]!),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.grey[100]!),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.grey[100]!),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: Colors.red),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.grey[100]!),
+              ),
+            ),
+            borderRadius: BorderRadius.circular(12),
           ),
           const SizedBox(height: 20),
           EditDetailsTextFormField(
@@ -130,7 +160,8 @@ class _ActivityFormState extends State<ActivityForm> {
                     }
 
                     Navigator.pop(context);
-                    context.push('/services/site/${widget.siteId}/activity/$id');
+                    context
+                        .push('/services/site/${widget.siteId}/activity/$id');
                   } catch (e) {
                     print(e);
                     showAlertDialog(context);

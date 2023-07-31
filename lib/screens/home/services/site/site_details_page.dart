@@ -145,19 +145,11 @@ class SiteDetailsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Description:',
-                          style: bodySmall(context),
-                        ),
-                        Text(
-                          site.description,
-                          textAlign: TextAlign.justify,
-                          // style: const TextStyle(height: 1.2),
-                        ),
-                      ],
+                    flex: 2,
+                    child: Text(
+                      site.description,
+                      textAlign: TextAlign.justify,
+                      style: const TextStyle(color: Colors.grey, height: 1.5),
                     ),
                   ),
                   const SizedBox(width: 40),
@@ -166,23 +158,12 @@ class SiteDetailsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Location:',
-                          style: bodySmall(context),
-                        ),
-                        Text(
-                          site.location,
-                          style: const TextStyle(),
-                        ),
+                        Text('Location:', style: bodySmall(context)),
+                        Text(site.location),
                         const SizedBox(height: 20),
+                        Text('Geo point:', style: bodySmall(context)),
                         Text(
-                          'Geo point:',
-                          style: bodySmall(context),
-                        ),
-                        Text(
-                          '${site.geoLocation.latitude}, ${site.geoLocation.longitude}',
-                          style: const TextStyle(),
-                        ),
+                            '${site.geoLocation.latitude}, ${site.geoLocation.longitude}'),
                       ],
                     ),
                   ),

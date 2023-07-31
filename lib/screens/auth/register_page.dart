@@ -25,17 +25,18 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController companyEmailController = TextEditingController();
   final ValueNotifier<XFile?> companyLogoNotifier = ValueNotifier(null);
   final TextEditingController _passwordController = TextEditingController();
+
   final ValueNotifier<bool> buttonEnabledNotifier = ValueNotifier(false);
 
   setButtonState() {
-    if (companyNameController.text.isEmpty ||
-        companyMottoController.text.isEmpty ||
-        companyEmailController.text.isEmpty ||
+    if (companyNameController.text.trim().isEmpty ||
+        companyMottoController.text.trim().isEmpty ||
+        companyEmailController.text.trim().isEmpty ||
         !companyEmailController.text.trim().contains(RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")) ||
         companyLogoNotifier.value == null ||
-        _passwordController.text.isEmpty ||
-        _passwordController.text.length < 6) {
+        _passwordController.text.trim().isEmpty ||
+        _passwordController.text.trim().length < 6) {
       buttonEnabledNotifier.value = false;
     } else {
       buttonEnabledNotifier.value = true;
@@ -151,7 +152,8 @@ class _RegisterPageState extends State<RegisterPage> {
             onPressed: () async {
               try {
                 await register();
-                context.go('/dashboard');
+
+                context.go('/services');
               } catch (e) {
                 print(e);
                 showAlertDialog(context);
@@ -174,20 +176,32 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future register() async {
     UserCredential credential = await auth.createUserWithEmailAndPassword(
-        email: companyEmailController.text, password: _passwordController.text);
+        email: companyEmailController.text.trim(),
+        password: _passwordController.text);
 
     await logosRef(credential.user!.uid)
         .putData(await companyLogoNotifier.value!.readAsBytes());
 
-    await companiesCollection.add(
-      Company(
-        'id',
-        companyNameController.text,
-        companyMottoController.text,
-        await FirebaseStorage.instance
-            .ref('logos/${credential.user!.uid}')
-            .getDownloadURL(),
-      ).toFirebase(),
-    );
+    await companiesCollection.doc(credential.user!.uid).set(
+          Company(
+            name: companyNameController.text.trim(),
+            motto: companyMottoController.text.trim(),
+            email: companyEmailController.text.trim(),
+            logoUrl: await FirebaseStorage.instance
+                .ref('logos/${credential.user!.uid}')
+                .getDownloadURL(),
+          ).toFirebase(),
+        );
+  }
+
+  @override
+  void dispose() {
+    companyNameController.dispose();
+    companyMottoController.dispose();
+    companyEmailController.dispose();
+    companyLogoNotifier.dispose();
+    _passwordController.dispose();
+    
+    super.dispose();
   }
 }

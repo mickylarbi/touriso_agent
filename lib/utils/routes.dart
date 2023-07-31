@@ -7,6 +7,7 @@ import 'package:touriso_agent/screens/home/dashboard/dashboard_page.dart';
 import 'package:touriso_agent/screens/home/history/history_page.dart';
 import 'package:touriso_agent/screens/home/home_page.dart';
 import 'package:touriso_agent/screens/home/order/order_page.dart';
+import 'package:touriso_agent/screens/home/profile_page.dart';
 import 'package:touriso_agent/screens/home/services/hotel/edit_hotel_page.dart';
 import 'package:touriso_agent/screens/home/services/services_page.dart';
 import 'package:touriso_agent/screens/home/services/site/activity/activity_details_page.dart';
@@ -72,6 +73,10 @@ GoRouter goRouter = GoRouter(
       ],
       builder: (context, state, child) => HomePage(child: child),
     ),
+    GoRoute(
+      path: '/profile',
+      builder: (context, state) => const ProfilePage(),
+    )
   ],
   initialLocation: '/login',
 );

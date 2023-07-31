@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:touriso_agent/models/company.dart';
 import 'package:touriso_agent/screens/home/side_bar.dart';
 import 'package:touriso_agent/utils/colors.dart';
 import 'package:touriso_agent/utils/constants.dart';
 import 'package:touriso_agent/utils/dialogs.dart';
 import 'package:touriso_agent/utils/firebase_helper.dart';
+import 'package:touriso_agent/utils/text_styles.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key, required this.child});
@@ -25,25 +27,24 @@ class HomePage extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Expanded(
-                  child: Hero(
-                    tag: kLogoTag,
-                    child: Image.asset(
-                      'assets/images/TOURISO 2.png',
-                      height: 50,
-                    ),
+                Hero(
+                  tag: kLogoTag,
+                  child: Image.asset(
+                    'assets/images/TOURISO 2.png',
+                    height: 50,
                   ),
                 ),
+                const Spacer(),
                 PopupMenuButton(
                   key: _menuKey,
                   itemBuilder: (context) => <PopupMenuEntry>[
                     const PopupMenuItem(
-                      value: 'Settings',
+                      value: 'Profile',
                       child: Row(
                         children: [
-                          Icon(Icons.settings),
-                          SizedBox(width: 5),
-                          Text('Settings'),
+                          Icon(Icons.person_outline_rounded),
+                          SizedBox(width: 20),
+                          Text('Profile'),
                         ],
                       ),
                     ),
@@ -53,7 +54,7 @@ class HomePage extends StatelessWidget {
                       child: Row(
                         children: [
                           Icon(Icons.logout),
-                          SizedBox(width: 5),
+                          SizedBox(width: 20),
                           Text('Log out'),
                         ],
                       ),
@@ -70,29 +71,65 @@ class HomePage extends StatelessWidget {
                         },
                       );
                     }
+                    if (value == 'Profile') {
+                      context.go('/profile');
+                    }
                   },
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  child: InkWell(
-                    onTap: () {
-                      _menuKey.currentState!.showButtonMenu();
+                      borderRadius: BorderRadius.circular(10)),
+                  child: FutureBuilder(
+                    future:
+                        companiesCollection.doc(auth.currentUser!.uid).get(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text(snapshot.error.toString());
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        Company company = Company.fromFirebase(
+                            snapshot.data!.data() as Map<String, dynamic>,
+                            snapshot.data!.id);
+
+                        return InkWell(
+                          onTap: () {
+                            _menuKey.currentState!.showButtonMenu();
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              border:
+                                  Border(left: BorderSide(color: borderColor)),
+                              color: Colors.grey[50],
+                            ),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(company.logoUrl),
+                                  backgroundColor: Colors.grey[200],
+                                ),
+                                const SizedBox(width: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(company.name),
+                                    Text(
+                                      company.email,
+                                      style: bodySmall(context),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(width: 20),
+                                const Icon(Icons.arrow_drop_down),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+
+                      return Container();
                     },
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        border: Border(left: BorderSide(color: borderColor)),
-                        color: Colors.grey[50],
-                      ),
-                      child: Row(
-                        children: [
-                          CircleAvatar(),
-                          const SizedBox(width: 20),
-                          const Text('MICHAEL LARBI'),
-                          const Icon(Icons.arrow_drop_down)
-                        ],
-                      ),
-                    ),
                   ),
                 ),
               ],

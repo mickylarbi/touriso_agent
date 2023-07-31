@@ -84,12 +84,12 @@ class _LoginPageState extends State<LoginPage> {
             onPressed: () async {
               try {
                 await auth.signInWithEmailAndPassword(
-                  email: _emailController.text,
+                  email: _emailController.text.trim(),
                   password: _passwordController.text,
                 );
 
                 // ignore: use_build_context_synchronously
-                context.go('/dashboard');
+                context.go('/services');
               } catch (e) {
                 print(e);
                 showAlertDialog(context);

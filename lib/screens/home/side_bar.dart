@@ -5,12 +5,7 @@ import 'package:touriso_agent/utils/variables.dart';
 
 // ignore: must_be_immutable
 class SideBar extends StatelessWidget {
-  SideBar({
-    super.key,
-  });
-
-  final GlobalKey<PopupMenuButtonState> _menuKey =
-      GlobalKey<PopupMenuButtonState>();
+  const SideBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +44,6 @@ class SideBar extends StatelessWidget {
                     children: [
                       Icon(
                         icons[index],
-                        // color:
-                        //     selectedPage == index ? Colors.white : Colors.black,
                       ),
                       const SizedBox(width: 5),
                       Expanded(
@@ -66,58 +59,6 @@ class SideBar extends StatelessWidget {
             );
           }),
           const Spacer(),
-          PopupMenuButton(
-            //TODO: move profile to top right
-            key: _menuKey,
-            itemBuilder: (context) => <PopupMenuEntry>[
-              const PopupMenuItem(
-                value: 'Settings',
-                child: Row(
-                  children: [
-                    Icon(Icons.settings),
-                    SizedBox(width: 5),
-                    Text('Settings'),
-                  ],
-                ),
-              ),
-              const PopupMenuDivider(),
-              const PopupMenuItem(
-                value: 'Log out',
-                child: Row(
-                  children: [
-                    Icon(Icons.logout),
-                    SizedBox(width: 5),
-                    Text('Log out'),
-                  ],
-                ),
-              ),
-            ],
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: InkWell(
-              onTap: () {
-                _menuKey.currentState!.showButtonMenu();
-              },
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.black54,
-                ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.person, color: Colors.white),
-                    SizedBox(width: 5),
-                    Text(
-                      'Profile',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

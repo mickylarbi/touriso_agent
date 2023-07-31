@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:touriso_agent/screens/home/services/site/site_list.dart';
 import 'package:touriso_agent/screens/shared/page_layout.dart';
-import 'package:touriso_agent/utils/colors.dart';
+// import 'package:touriso_agent/utils/colors.dart';
 
 class ServicesPage extends StatefulWidget {
   const ServicesPage({super.key});
@@ -15,49 +15,51 @@ class _ServicesPageState extends State<ServicesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PageLayout(
-      sectioned: true,
-      appBarExtended: true,
-      title: 'Services',
-      appBarExtension: ValueListenableBuilder(
-        valueListenable: pageNotifier,
-        builder: (context, value, _) {
-          return Row(
-            children: List.generate(
-              pages.length,
-              (index) => GestureDetector(
-                onTap: () {
-                  pageNotifier.value = index;
-                },
-                child: Container(
-                  width: 100,
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                          width: 3,
-                          color: value == index
-                              ? primaryColor
-                              : Colors.transparent),
-                    ),
-                  ),
-                  child: Text(
-                    pages[index],
-                    style: index == value
-                        ? const TextStyle(color: primaryColor)
-                        : null,
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-      body: PageView(
-        children: [SiteList()],
-      ),
-    );
+    return const PageLayout(
+        sectioned: true,
+        // appBarExtended: true,
+        title: 'Services',
+        // appBarExtension: ValueListenableBuilder(
+        //   valueListenable: pageNotifier,
+        //   builder: (context, value, _) {
+        //     return Row(
+        //       children: List.generate(
+        //         pages.length,
+        //         (index) => GestureDetector(
+        //           onTap: () {
+        //             pageNotifier.value = index;
+        //           },
+        //           child: Container(
+        //             width: 100,
+        //             alignment: Alignment.center,
+        //             padding: const EdgeInsets.all(12),
+        //             decoration: BoxDecoration(
+        //               border: Border(
+        //                 bottom: BorderSide(
+        //                     width: 3,
+        //                     color: value == index
+        //                         ? primaryColor
+        //                         : Colors.transparent),
+        //               ),
+        //             ),
+        //             child: Text(
+        //               pages[index],
+        //               style: index == value
+        //                   ? const TextStyle(color: primaryColor)
+        //                   : null,
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     );
+        //   },
+        // ),
+        body: SiteList()
+
+        // PageView(
+        //   children: [SiteList()],
+        // ),
+        );
   }
 
   @override
@@ -136,7 +138,7 @@ class _ServicesPageState extends State<ServicesPage> {
 //   }
 // }
 
-List<String> pages = ['Services', 'Hotel', 'Apartment', 'Flight', 'Bus'];
+List<String> pages = ['Sites', 'Hotel', 'Apartment', 'Flight', 'Bus'];
 
 //  ConstrainedBox(
 //                 constraints: const BoxConstraints(maxHeight: 500),
