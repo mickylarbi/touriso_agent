@@ -20,7 +20,9 @@ class _SiteListState extends State<SiteList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: sitesCollection.get(),
+      future: sitesCollection
+          .where('companyId', isEqualTo: auth.currentUser!.uid)
+          .get(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Center(child: CustomErrorWidget());
