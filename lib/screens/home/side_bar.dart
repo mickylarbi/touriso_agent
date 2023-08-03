@@ -65,11 +65,10 @@ class SideBar extends StatelessWidget {
   }
 }
 
-List<String> pages = ['Dashboard', 'Orders', 'History', 'Services'];
+List<String> pages = ['Bookings', 'Services'];
 
 List<IconData> icons = [
-  Icons.dashboard,
+  // Icons.dashboard,
   Icons.list,
-  Icons.history,
   Icons.room_service_rounded
 ];

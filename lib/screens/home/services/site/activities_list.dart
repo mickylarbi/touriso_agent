@@ -28,7 +28,7 @@ class ActivitiesList extends StatelessWidget {
           return Column(
             children: [
               if (activities.isNotEmpty)
-                const RowView(
+                const RowViewText(
                   texts: [
                     'Name',
                     'Duration',
@@ -43,7 +43,7 @@ class ActivitiesList extends StatelessWidget {
                     onTap: () {
                       context.push('/services/site/$siteId/activity/${e.id}');
                     },
-                    child: RowView(texts: [
+                    child: RowViewText(texts: [
                       e.name,
                       e.duration.toString(),
                       '$ghanaCedi ${e.price}',

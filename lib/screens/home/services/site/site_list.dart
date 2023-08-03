@@ -20,9 +20,7 @@ class _SiteListState extends State<SiteList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: sitesCollection
-          .where('companyId', isEqualTo: auth.currentUser!.uid)
-          .get(),
+      future: sitesCollection.where('companyId', isEqualTo: uid).get(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Center(child: CustomErrorWidget());
@@ -72,7 +70,7 @@ class _SiteListState extends State<SiteList> {
                     scrollDirection: Axis.horizontal,
                     child: Column(
                       children: [
-                        const RowView(
+                        const RowViewText(
                           texts: [
                             'Name',
                             'Location',
@@ -95,7 +93,7 @@ class _SiteListState extends State<SiteList> {
 
                                       setState(() {});
                                     },
-                                    child: RowView(
+                                    child: RowViewText(
                                       texts: [
                                         sites[index].name,
                                         sites[index].location,

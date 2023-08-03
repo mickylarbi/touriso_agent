@@ -82,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
           StatefulLoadingButton(
             buttonEnabledNotifier: buttonEnabledNotifier,
             onPressed: () async {
+              //TODO: authorization
               try {
                 await auth.signInWithEmailAndPassword(
                   email: _emailController.text.trim(),
