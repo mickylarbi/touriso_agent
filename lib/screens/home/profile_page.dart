@@ -30,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
     // TODO: move this page to root route
     return PageLayout(
       title: 'Profile',
-      actions: [
+      actions: const [
         // TextButton(
         //   onPressed: () {},
         //   child: const Text('Change password'),
