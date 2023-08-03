@@ -208,6 +208,7 @@ class _BookingsListState extends State<BookingsList> {
                   const Spacer(),
                 ],
               ),
+              const SizedBox(height: 20),
               checkedOutBookings.isEmpty
                   ? const Center(child: EmptyWidget())
                   : SizedBox(
