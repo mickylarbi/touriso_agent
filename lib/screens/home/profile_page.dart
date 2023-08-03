@@ -31,10 +31,10 @@ class _ProfilePageState extends State<ProfilePage> {
     return PageLayout(
       title: 'Profile',
       actions: [
-        TextButton(
-          onPressed: () {},
-          child: const Text('Change password'),
-        )
+        // TextButton(
+        //   onPressed: () {},
+        //   child: const Text('Change password'),
+        // )
       ],
       body: FutureBuilder(
         future: companiesCollection.doc(auth.currentUser!.uid).get(),
