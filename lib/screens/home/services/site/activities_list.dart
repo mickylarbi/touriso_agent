@@ -55,7 +55,7 @@ class ActivitiesList extends StatelessWidget {
           );
         }
 
-        return const Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator.adaptive());
       },
     );
   }

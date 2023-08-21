@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:touriso_agent/models/hotels/hotel.dart';
-import 'package:touriso_agent/screens/home/services/hotel/rooms_grid.dart';
+import 'package:touriso_agent/screens/home/services/accomodation/rooms_grid.dart';
 import 'package:touriso_agent/screens/shared/buttons.dart';
 import 'package:touriso_agent/screens/shared/custom_text_form_field.dart';
 import 'package:touriso_agent/screens/shared/page_layout.dart';

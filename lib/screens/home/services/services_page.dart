@@ -11,7 +11,10 @@ class ServicesPage extends StatefulWidget {
 }
 
 class _ServicesPageState extends State<ServicesPage> {
-  ValueNotifier<int> pageNotifier = ValueNotifier(0);
+  // ValueNotifier<int> pageNotifier = ValueNotifier(0);
+  PageController pageController = PageController();
+  int selectedIndex = 0;
+  List<String> tabs = ['Sites', 'Accomodation'];
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +57,53 @@ class _ServicesPageState extends State<ServicesPage> {
         //     );
         //   },
         // ),
-        body: SiteList()
+        body: const SiteList()
+
+        //  Column(
+        //   children: [
+        //     StatefulBuilder(
+        //         builder: (context, setState) => Container(
+        //               padding:
+        //                   const EdgeInsets.only(left: 24, right: 24, top: 12),
+        //               color: Colors.white,
+        //               child: Row(
+        //                 children: List.generate(
+        //                   tabs.length,
+        //                   (index) => GestureDetector(
+        //                     onTap: () {
+        //                       selectedIndex = index;
+        //                       pageController.jumpToPage(index);
+        //                       setState(() {});
+        //                     },
+        //                     child: Container(
+        //                       padding: const EdgeInsets.symmetric(
+        //                           vertical: 12, horizontal: 24),
+        //                       decoration: selectedIndex == index
+        //                           ? const BoxDecoration(
+        //                               border: Border(
+        //                                   bottom: BorderSide(
+        //                                       color: primaryColor, width: 2)))
+        //                           : null,
+        //                       child: Text(
+        //                         tabs[index],
+        //                         style: selectedIndex == index
+        //                             ? const TextStyle(color: primaryColor)
+        //                             : null,
+        //                       ),
+        //                     ),
+        //                   ),
+        //                 ),
+        //               ),
+        //             )),
+        //     Expanded(
+        //       child: PageView(
+        //         controller: pageController,
+        //         physics: const NeverScrollableScrollPhysics(),
+        //         children: const [SiteList(), AccommodationSpaceList()],
+        //       ),
+        //     ),
+        //   ],
+        // )
 
         // PageView(
         //   children: [SiteList()],
@@ -64,7 +113,6 @@ class _ServicesPageState extends State<ServicesPage> {
 
   @override
   void dispose() {
-    pageNotifier.dispose();
     super.dispose();
   }
 }

@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -153,7 +152,19 @@ class _RegisterPageState extends State<RegisterPage> {
               try {
                 await register();
 
-                context.go('/services');
+                context.go('/bookings');
+              } on FirebaseAuthException catch (e) {
+                if (e.code == 'weak-password') {
+                    showAlertDialog(
+                      context,
+                      message: 'The password provided is too weak.',
+                    );
+                  } else if (e.code == 'email-already-in-use') {
+                    showAlertDialog(
+                      context,
+                      message: 'An account already exists for that email.',
+                    );
+                  }
               } catch (e) {
                 print(e);
                 showAlertDialog(context);
@@ -175,21 +186,18 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future register() async {
-    UserCredential credential = await auth.createUserWithEmailAndPassword(
+    await auth.createUserWithEmailAndPassword(
         email: companyEmailController.text.trim(),
         password: _passwordController.text);
 
-    await logosRef(credential.user!.uid)
-        .putData(await companyLogoNotifier.value!.readAsBytes());
+    await logosRef(uid).putData(await companyLogoNotifier.value!.readAsBytes());
 
-    await companiesCollection.doc(credential.user!.uid).set(
+    await companiesCollection.doc(uid).set(
           Company(
             name: companyNameController.text.trim(),
             motto: companyMottoController.text.trim(),
             email: companyEmailController.text.trim(),
-            logoUrl: await FirebaseStorage.instance
-                .ref('logos/${credential.user!.uid}')
-                .getDownloadURL(),
+            logoUrl: await logosRef(uid).getDownloadURL(),
           ).toFirebase(),
         );
   }
@@ -201,7 +209,7 @@ class _RegisterPageState extends State<RegisterPage> {
     companyEmailController.dispose();
     companyLogoNotifier.dispose();
     _passwordController.dispose();
-    
+
     super.dispose();
   }
 }

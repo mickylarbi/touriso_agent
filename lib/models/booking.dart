@@ -9,25 +9,27 @@ class Booking extends Equatable {
   String companyId;
   DateTime dateTime;
   int numberOfPeople;
-  bool checkedOut;
+  bool checkedIn;
 
-  Booking(
-      {required this.id,
-      required this.clientId,
-      required this.activityId,
-      required this.companyId,
-      required this.dateTime,
-      required this.numberOfPeople,
-      this.checkedOut=false,});
+  Booking({
+    required this.id,
+    required this.clientId,
+    required this.activityId,
+    required this.companyId,
+    required this.dateTime,
+    required this.numberOfPeople,
+    this.checkedIn = false,
+  });
 
-  Booking.empty(
-      {this.id = '',
-      required this.clientId,
-      required this.activityId,
-      required this.companyId,
-      required this.dateTime,
-      required this.numberOfPeople,
-      this.checkedOut=false,});
+  Booking.empty({
+    this.id = '',
+    required this.clientId,
+    required this.activityId,
+    required this.companyId,
+    required this.dateTime,
+    required this.numberOfPeople,
+    this.checkedIn = false,
+  });
 
   Booking.fromFirebase(Map<String, dynamic> map, String bookingId)
       : id = bookingId,
@@ -36,8 +38,8 @@ class Booking extends Equatable {
         companyId = map['companyId'],
         dateTime = DateTime.fromMillisecondsSinceEpoch(
             (map['dateTime'] as Timestamp).millisecondsSinceEpoch),
-        numberOfPeople = map['numberOfPeople']
-        ,checkedOut=map['checkedOut']??false;
+        numberOfPeople = map['numberOfPeople'],
+        checkedIn = map['checkedOut'] ?? false;
 
   Map<String, dynamic> toFirebase() => {
         'clientId': clientId,
@@ -45,7 +47,7 @@ class Booking extends Equatable {
         'companyId': companyId,
         'dateTime': dateTime,
         'numberOfPeople': numberOfPeople,
-        'checkedOut': checkedOut, 
+        'checkedOut': checkedIn,
       };
 
   @override

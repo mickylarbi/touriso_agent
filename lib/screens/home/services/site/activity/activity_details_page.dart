@@ -150,7 +150,7 @@ class ActivityDetailsPage extends StatelessWidget {
               );
             }
 
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator.adaptive());
           },
         );
       },
@@ -248,7 +248,7 @@ class ActivityDetailsPage extends StatelessWidget {
               loadingBuilder: (context, child, loadingProgress) =>
                   loadingProgress == null
                       ? child
-                      : const Center(child: CircularProgressIndicator()),
+                      : const Center(child: CircularProgressIndicator.adaptive()),
             ),
             actions: [
               IconTextButton(
@@ -297,7 +297,7 @@ class ActivityDetailsPage extends StatelessWidget {
         loadingBuilder: (context, child, loadingProgress) =>
             loadingProgress == null
                 ? child
-                : const Center(child: CircularProgressIndicator()),
+                : const Center(child: CircularProgressIndicator.adaptive()),
       ),
     );
   }

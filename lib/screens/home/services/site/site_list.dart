@@ -41,7 +41,7 @@ class _SiteListState extends State<SiteList> {
                 children: [
                   Text(
                     'Tourist sites',
-                    style: headlineSmall(context),
+                    style: titleLarge(context),
                   ),
                   const Spacer(),
                   FilledButton(
@@ -113,7 +113,7 @@ class _SiteListState extends State<SiteList> {
           );
         }
 
-        return const Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator.adaptive());
       },
     );
   }

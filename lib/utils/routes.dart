@@ -6,12 +6,13 @@ import 'package:touriso_agent/screens/auth/register_page.dart';
 import 'package:touriso_agent/screens/home/dashboard/dashboard_page.dart';
 import 'package:touriso_agent/screens/home/history/history_page.dart';
 import 'package:touriso_agent/screens/home/home_page.dart';
-import 'package:touriso_agent/screens/home/order/bookings_page.dart';
+import 'package:touriso_agent/screens/home/bookings/bookings_page.dart';
 import 'package:touriso_agent/screens/home/profile_page.dart';
-import 'package:touriso_agent/screens/home/services/hotel/edit_hotel_page.dart';
+import 'package:touriso_agent/screens/home/services/accomodation/edit_hotel_page.dart';
 import 'package:touriso_agent/screens/home/services/services_page.dart';
 import 'package:touriso_agent/screens/home/services/site/activity/activity_details_page.dart';
 import 'package:touriso_agent/screens/home/services/site/site_details_page.dart';
+import 'package:touriso_agent/utils/firebase_helper.dart';
 
 GoRouter goRouter = GoRouter(
   routes: [
@@ -78,5 +79,5 @@ GoRouter goRouter = GoRouter(
       builder: (context, state) => const ProfilePage(),
     )
   ],
-  initialLocation: '/login',
+  initialLocation: auth.currentUser == null ? '/login' : '/bookings',
 );

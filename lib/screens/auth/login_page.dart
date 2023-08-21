@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:touriso_agent/screens/shared/buttons.dart';
@@ -82,17 +83,41 @@ class _LoginPageState extends State<LoginPage> {
           StatefulLoadingButton(
             buttonEnabledNotifier: buttonEnabledNotifier,
             onPressed: () async {
-              //TODO: authorization
               try {
-                await auth.signInWithEmailAndPassword(
-                  email: _emailController.text.trim(),
-                  password: _passwordController.text,
-                );
+                if ((await clientsCollection
+                        .where('email', isEqualTo: _emailController.text.trim())
+                        .get())
+                    .docs
+                    .isNotEmpty) {
+                  showAlertDialog(
+                    context,
+                    message: 'Email already exists for a client',
+                  );
+                } else {
+                  await auth.signInWithEmailAndPassword(
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text,
+                  );
 
-                // ignore: use_build_context_synchronously
-                context.go('/services');
+                  // ignore: use_build_context_synchronously
+                  context.go('/bookings');
+                }
+              } on FirebaseAuthException catch (e) {
+                print(e.code);
+                if (e.code == 'user-not-found') {
+                  showAlertDialog(
+                    context,
+                    message: 'No user found for that email.',
+                  );
+                } else if (e.code == 'wrong-password') {
+                  showAlertDialog(
+                    context,
+                    message: 'Wrong password provided for that user.',
+                  );
+                } else {
+                  showAlertDialog(context);
+                }
               } catch (e) {
-                print(e);
                 showAlertDialog(context);
               }
             },
@@ -105,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
             onPressed: () {
               context.go('/register');
             },
-          )
+          ),
         ],
       ),
     );

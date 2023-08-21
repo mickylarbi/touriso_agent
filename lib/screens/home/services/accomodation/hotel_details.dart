@@ -9,7 +9,9 @@ class HotelDetailsPage extends StatelessWidget {
     return PageLayout(
       title: 'Hotel Details',
       actions: [],
-      body: Column(children: []),
+      body: Column(
+        children: [],
+      ),
     );
   }
 }
