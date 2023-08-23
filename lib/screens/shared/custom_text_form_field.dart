@@ -15,7 +15,7 @@ class CustomTextFormField extends StatelessWidget {
     this.textAlign,
     this.prefix,
     this.suffix,
-    this.initialValue,
+    this.initialValue, this.onChanged,
   });
 
   final TextEditingController controller;
@@ -28,11 +28,13 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? prefix;
   final Widget? suffix;
   final String? initialValue;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      onChanged: onChanged,
       keyboardType: keyboardType,
       style: bodyMedium(context),
       decoration: InputDecoration(

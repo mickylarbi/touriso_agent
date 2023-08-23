@@ -19,4 +19,5 @@ void main() async {
   runApp(const Src());
 
   //TODO: show alert dialog for error events
+  //TODO: new features: articles/blogs and have someone respond to chats
 }

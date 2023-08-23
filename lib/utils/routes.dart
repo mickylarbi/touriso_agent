@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:touriso_agent/screens/auth/auth_shell.dart';
 import 'package:touriso_agent/screens/auth/login_page.dart';
 import 'package:touriso_agent/screens/auth/register_page.dart';
+import 'package:touriso_agent/screens/home/chat/chat_screen.dart';
 import 'package:touriso_agent/screens/home/dashboard/dashboard_page.dart';
 import 'package:touriso_agent/screens/home/history/history_page.dart';
 import 'package:touriso_agent/screens/home/home_page.dart';
@@ -77,7 +78,11 @@ GoRouter goRouter = GoRouter(
     GoRoute(
       path: '/profile',
       builder: (context, state) => const ProfilePage(),
-    )
+    ),
+    GoRoute(
+      path: '/chat',
+      builder: (context, state) =>  ChatScreen(),
+    ),
   ],
   initialLocation: auth.currentUser == null ? '/login' : '/bookings',
 );
