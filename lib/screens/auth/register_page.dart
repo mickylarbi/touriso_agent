@@ -115,11 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
             builder: (BuildContext context, XFile? value, Widget? child) {
               return Column(
                 children: [
-                  if (value != null)
-                    Image.network(
-                      value.path,
-                      width: 300,
-                    ),
+                  if (value != null) Image.network(value.path, width: 300),
                   const SizedBox(height: 20),
                   TextButton(
                     onPressed: () async {
@@ -155,16 +151,16 @@ class _RegisterPageState extends State<RegisterPage> {
                 context.go('/bookings');
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'weak-password') {
-                    showAlertDialog(
-                      context,
-                      message: 'The password provided is too weak.',
-                    );
-                  } else if (e.code == 'email-already-in-use') {
-                    showAlertDialog(
-                      context,
-                      message: 'An account already exists for that email.',
-                    );
-                  }
+                  showAlertDialog(
+                    context,
+                    message: 'The password provided is too weak.',
+                  );
+                } else if (e.code == 'email-already-in-use') {
+                  showAlertDialog(
+                    context,
+                    message: 'An account already exists for that email.',
+                  );
+                }
               } catch (e) {
                 print(e);
                 showAlertDialog(context);

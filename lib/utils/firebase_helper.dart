@@ -13,7 +13,11 @@ CollectionReference clientsCollection = firestore.collection('clients');
 CollectionReference sitesCollection = firestore.collection('sites');
 CollectionReference activitiesCollection = firestore.collection('activities');
 CollectionReference bookingsCollection = firestore.collection('bookings');
+CollectionReference writersCollection = firestore.collection('writers');
+CollectionReference articlesCollection = firestore.collection('articles');
 
 Reference logosRef(String companyId) => storage.ref('logos/$companyId');
 Reference picturesRef(String clientId) => storage.ref('pictures/$clientId');
+Reference get writerPictureRef => storage.ref('writers/$uid');
 Reference imagesRef(String entityId) => storage.ref(entityId);
+Reference  articlesImagesRef(articleId) => storage.ref('articlesImages/$articleId');

@@ -131,6 +131,14 @@ class _LoginPageState extends State<LoginPage> {
               context.go('/register');
             },
           ),
+          const SizedBox(height: 30),
+          CustomTextSpan(
+            firstText: '',
+            secondText: 'Continue as writer',
+            onPressed: () {
+              context.go('/writer_login');
+            },
+          ),
         ],
       ),
     );

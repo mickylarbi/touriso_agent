@@ -8,7 +8,7 @@ class AccommodationSpaceList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      // future: Future,
+      future: Future(() async {}),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
           return const Center(child: CustomErrorWidget());

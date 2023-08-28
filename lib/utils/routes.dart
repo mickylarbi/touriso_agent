@@ -1,8 +1,10 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_router/go_router.dart';
 import 'package:touriso_agent/screens/auth/auth_shell.dart';
+import 'package:touriso_agent/screens/auth/continue_as_writer.dart';
 import 'package:touriso_agent/screens/auth/login_page.dart';
 import 'package:touriso_agent/screens/auth/register_page.dart';
+import 'package:touriso_agent/screens/home/blog/blog_dash.dart';
 import 'package:touriso_agent/screens/home/chat/chat_screen.dart';
 import 'package:touriso_agent/screens/home/dashboard/dashboard_page.dart';
 import 'package:touriso_agent/screens/home/history/history_page.dart';
@@ -26,6 +28,14 @@ GoRouter goRouter = GoRouter(
         GoRoute(
           path: '/register',
           builder: (context, state) => const RegisterPage(),
+        ),
+        GoRoute(
+          path: '/writer_login',
+          builder: (context, state) => const ContinueAsWriter1(),
+        ),
+        GoRoute(
+          path: '/writer_login_details',
+          builder: (context, state) => const ContinueAsWriter2(),
         ),
       ],
       builder: (context, state, child) => AuthShell(child: child),
@@ -81,7 +91,11 @@ GoRouter goRouter = GoRouter(
     ),
     GoRoute(
       path: '/chat',
-      builder: (context, state) =>  ChatScreen(),
+      builder: (context, state) => ChatScreen(),
+    ),
+    GoRoute(
+      path: '/blog_dash',
+      builder: (context, state) => BlogDash(),
     ),
   ],
   initialLocation: auth.currentUser == null ? '/login' : '/bookings',
