@@ -371,10 +371,12 @@ class _ArticleDetailsPageState extends State<ArticleDetailsPage> {
                             ),
                             const SizedBox(height: 5),
                             ListView.separated(
+                              padding: const EdgeInsets.only(left: 24),
                               shrinkWrap: true,
                               primary: false,
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   FutureBuilder(
                                     future: getClientFromUid(
