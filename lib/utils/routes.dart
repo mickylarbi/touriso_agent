@@ -4,6 +4,7 @@ import 'package:touriso_agent/screens/auth/auth_shell.dart';
 import 'package:touriso_agent/screens/auth/continue_as_writer.dart';
 import 'package:touriso_agent/screens/auth/login_page.dart';
 import 'package:touriso_agent/screens/auth/register_page.dart';
+import 'package:touriso_agent/screens/home/blog/article_details_page.dart';
 import 'package:touriso_agent/screens/home/blog/blog_dash.dart';
 import 'package:touriso_agent/screens/home/chat/chat_screen.dart';
 import 'package:touriso_agent/screens/home/dashboard/dashboard_page.dart';
@@ -93,9 +94,16 @@ GoRouter goRouter = GoRouter(
       path: '/chat',
       builder: (context, state) => ChatScreen(),
     ),
-    GoRoute(
-      path: '/blog_dash',
-      builder: (context, state) => BlogDash(),
+    ShellRoute(
+      routes: [
+        GoRoute(
+          path: '/articles/:id',
+          builder: (context, state) => ArticleDetailsPage(
+            articleId: state.pathParameters['id'],
+          ),
+        ),
+      ],
+      builder: (context, state, child) => BlogDash(child: child),
     ),
   ],
   initialLocation: auth.currentUser == null ? '/login' : '/bookings',

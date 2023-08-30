@@ -95,7 +95,7 @@ class _ContinueAsWriter1State extends State<ContinueAsWriter1> {
                     .isEmpty) {
                   context.go('/writer_login_details');
                 } else {
-                  context.go('/blog_dash');
+                  context.go('/articles/0');
                 }
               } on FirebaseAuthException catch (e) {
                 print(e.code);
@@ -248,7 +248,7 @@ class _ContinueAsWriter2State extends State<ContinueAsWriter2> {
                     'pictureUrl': await writerPictureRef.getDownloadURL(),
                 });
 
-                context.go('/blog_dash');
+                context.go('/articles/0');
               } catch (e) {
                 print(e);
                 showAlertDialog(context);

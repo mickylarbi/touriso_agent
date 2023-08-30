@@ -1,46 +1,82 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:touriso_agent/models/comment.dart';
+import 'package:touriso_agent/utils/firebase_helper.dart';
 
 class Article extends Equatable {
   final String? id;
-  final DateTime dateTime;
+  final DateTime dateTimePosted;
+  final DateTime? lastEdited;
   final String title;
   final String content;
   final List<String> imageUrls;
   final List<String> siteIds;
   final List<String> activityIds;
+  final List<String> views;
+  final List<String> likes;
+  final List<Comment> comments;
 
   const Article({
     this.id,
-    required this.dateTime,
+    required this.dateTimePosted,
+    this.lastEdited,
     required this.title,
     required this.content,
     this.imageUrls = const [],
     this.siteIds = const [],
     this.activityIds = const [],
+    this.views = const [],
+    this.likes = const [],
+    this.comments = const [],
   });
 
   Article.fromFirebase(Map<String, dynamic> map, String articleId)
       : id = articleId,
-        dateTime = DateTime.fromMillisecondsSinceEpoch(
-            (map['dateTime'] as Timestamp).millisecondsSinceEpoch),
+        dateTimePosted = DateTime.fromMillisecondsSinceEpoch(
+            (map['dateTimePosted'] as Timestamp).millisecondsSinceEpoch),
+        lastEdited = map['lastEdited'] == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(
+                (map['lastEdited'] as Timestamp).millisecondsSinceEpoch),
         title = map['title'],
-        content = map['map'],
+        content = map['content'],
         imageUrls =
             (map['imageUrls'] as List).map((e) => e.toString()).toList(),
         siteIds = (map['siteIds'] as List).map((e) => e.toString()).toList(),
         activityIds =
-            (map['activityIds'] as List).map((e) => e.toString()).toList();
+            (map['activityIds'] as List).map((e) => e.toString()).toList(),
+        views = (map['views'] as List).map((e) => e.toString()).toList(),
+        likes = (map['likes'] as List).map((e) => e.toString()).toList(),
+        comments = (map['comments'] as List)
+            .map((e) => Comment.fromFirebase(e))
+            .toList();
 
   Map<String, dynamic> toMap() => {
-        'dateTime': dateTime,
+        'writerId': uid,
+        'dateTimePosted': dateTimePosted,
+        'lastEdited': lastEdited,
         'title': title,
         'content': content,
         'imageUrls': imageUrls,
         'siteIds': siteIds,
-        'activityIds': activityIds
+        'activityIds': activityIds,
+        'views': views,
+        'likes': likes,
+        'comments': comments,
       };
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+        id,
+        dateTimePosted,
+        lastEdited,
+        title,
+        content,
+        imageUrls,
+        siteIds,
+        activityIds,
+        views,
+        likes,
+        comments,
+      ];
 }

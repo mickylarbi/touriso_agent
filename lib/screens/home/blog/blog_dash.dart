@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:touriso_agent/models/article.dart';
-import 'package:touriso_agent/screens/home/blog/article_details.dart';
 import 'package:touriso_agent/screens/home/blog/articles_side_bar.dart';
 import 'package:touriso_agent/utils/colors.dart';
 import 'package:touriso_agent/utils/dialogs.dart';
@@ -9,7 +7,8 @@ import 'package:touriso_agent/utils/firebase_helper.dart';
 import 'package:touriso_agent/utils/text_styles.dart';
 
 class BlogDash extends StatefulWidget {
-  const BlogDash({super.key});
+  const BlogDash({super.key, required this.child});
+  final Widget child;
 
   @override
   State<BlogDash> createState() => _BlogDashState();
@@ -18,9 +17,6 @@ class BlogDash extends StatefulWidget {
 class _BlogDashState extends State<BlogDash> {
   final GlobalKey<PopupMenuButtonState> _menuKey =
       GlobalKey<PopupMenuButtonState>();
-
-  final ValueNotifier<Article?> selectedArticleNotifier =
-      ValueNotifier(null);
 
   @override
   Widget build(BuildContext context) {
@@ -124,32 +120,17 @@ class _BlogDashState extends State<BlogDash> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                const SizedBox(
                   width: 300,
-                  padding: const EdgeInsets.all(24),
-                  child: ArticlesSideBar(
-                      selectedArticleNotifier: selectedArticleNotifier),
+                  child: ArticlesSideBar(),
                 ),
                 const VerticalDivider(width: 0),
-                Expanded(
-                  child: ValueListenableBuilder(
-                    valueListenable: selectedArticleNotifier,
-                    builder: (context, value, child) {
-                      return ArticleDetailsPage(article: value);
-                    },
-                  ),
-                ),
+                Expanded(child: widget.child),
               ],
             ),
           )
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    selectedArticleNotifier.dispose();
-    super.dispose();
   }
 }

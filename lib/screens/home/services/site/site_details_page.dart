@@ -7,12 +7,12 @@ import 'package:touriso_agent/models/site/site.dart';
 import 'package:touriso_agent/screens/home/services/site/activities_list.dart';
 import 'package:touriso_agent/screens/home/services/site/activity/activity_form.dart';
 import 'package:touriso_agent/screens/home/services/site/site_form.dart';
-import 'package:touriso_agent/screens/shared/buttons.dart';
 import 'package:touriso_agent/screens/shared/custom_grid.dart';
 import 'package:touriso_agent/screens/shared/empty_widget.dart';
 import 'package:touriso_agent/screens/shared/page_layout.dart';
 import 'package:touriso_agent/utils/dialogs.dart';
 import 'package:touriso_agent/utils/firebase_helper.dart';
+import 'package:touriso_agent/utils/functions.dart';
 import 'package:touriso_agent/utils/text_styles.dart';
 
 class SiteDetailsPage extends StatelessWidget {
@@ -255,59 +255,34 @@ class SiteDetailsPage extends StatelessWidget {
   imageWidget(context, src, List<String> imageUrls, setState) {
     return InkWell(
       onTap: () {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            backgroundColor: Colors.transparent,
-            clipBehavior: Clip.none,
-            contentPadding: EdgeInsets.zero,
-            content: Image.network(
-              src,
-              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) =>
-                  child,
-              loadingBuilder: (context, child, loadingProgress) =>
-                  loadingProgress == null
-                      ? child
-                      : const Center(child: CircularProgressIndicator.adaptive()),
-            ),
-            actions: [
-              IconTextButton(
-                onPressed: () {
-                  List<String> temp = [...imageUrls];
-                  temp.remove(src);
+        expandImage(context, src, () {
+          List<String> temp = [...imageUrls];
+          temp.remove(src);
 
-                  showConfirmationDialog(
-                    context,
-                    message: 'Delete image?',
-                    confirmFunction: () async {
-                      try {
-                        showLoadingDialog(context);
+          showConfirmationDialog(
+            context,
+            message: 'Delete image?',
+            confirmFunction: () async {
+              try {
+                showLoadingDialog(context);
 
-                        await imagesRef(siteId)
-                            .child(imageUrls.indexOf(src).toString())
-                            .delete();
+                await imagesRef(siteId)
+                    .child(imageUrls.indexOf(src).toString())
+                    .delete();
 
-                        await sitesCollection
-                            .doc(siteId)
-                            .update({'imageUrls': temp});
+                await sitesCollection.doc(siteId).update({'imageUrls': temp});
 
-                        Navigator.pop(context);
-                        Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.pop(context);
 
-                        setState(() {});
-                      } catch (e) {
-                        print(e);
-                        showAlertDialog(context);
-                      }
-                    },
-                  );
-                },
-                color: Colors.red,
-                icon: Icons.delete_outline_rounded,
-              ),
-            ],
-          ),
-        );
+                setState(() {});
+              } catch (e) {
+                print(e);
+                showAlertDialog(context);
+              }
+            },
+          );
+        });
       },
       child: Image.network(
         src,
@@ -321,4 +296,6 @@ class SiteDetailsPage extends StatelessWidget {
       ),
     );
   }
+
+ 
 }

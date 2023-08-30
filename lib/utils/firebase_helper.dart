@@ -20,4 +20,4 @@ Reference logosRef(String companyId) => storage.ref('logos/$companyId');
 Reference picturesRef(String clientId) => storage.ref('pictures/$clientId');
 Reference get writerPictureRef => storage.ref('writers/$uid');
 Reference imagesRef(String entityId) => storage.ref(entityId);
-Reference  articlesImagesRef(articleId) => storage.ref('articlesImages/$articleId');
+Reference get articlesImagesRef => storage.ref('articlesImages');

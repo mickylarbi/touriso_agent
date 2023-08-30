@@ -18,6 +18,8 @@ void main() async {
 
   runApp(const Src());
 
+
+  //TODO: show activity and site tags for company sites and activities
   //TODO: show alert dialog for error events
   //TODO: new features: articles/blogs and have someone respond to chats
 }
